@@ -1,0 +1,14 @@
+Applied HDRI: C:\Desktop\SDPL\hdris\pine_attic_4k.hdr, strength: 0.6441509544777506
+Error: Vertex group 'Head' not found in mesh 'Hemisphere'
+Applied HDRI: C:\Desktop\SDPL\hdris\provence_studio_4k.hdr, strength: 0.7482473335411982
+Error: Vertex group 'Head' not found in mesh 'Hemisphere'
+Applied HDRI: C:\Desktop\SDPL\hdris\small_empty_room_1_4k.hdr, strength: 0.29362621741920036
+Error: Vertex group 'Head' not found in mesh 'Hemisphere'
+Applied HDRI: C:\Desktop\SDPL\hdris\small_empty_room_1_4k.hdr, strength: 0.30449884360588597
+Error: Vertex group 'Head' not found in mesh 'Hemisphere'
+Applied HDRI: C:\Desktop\SDPL\hdris\small_empty_room_2_4k.hdr, strength: 0.18235547185257273
+Error in main: name 'camera' is not defined
+Error in main: name 'camera' is not defined
+Error in main: name 'camera' is not defined
+Applied HDRI: C:\Desktop\SDPL\hdris\brown_photostudio_02_4k.hdr, strength: 0.6549716503355025
+Error in render_camera_from_vertices: 'bpy_prop_collection[key]: key "Head" not found'
