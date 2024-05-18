@@ -1,0 +1,72 @@
+import bpy
+import csv
+import bpy
+import csv
+import bgl
+import bpy_extras
+from mathutils import Vector
+import bpy
+import csv
+import bpy_extras
+from bpy_extras.object_utils import world_to_camera_view
+import bpy
+import csv
+import bgl
+import bpy_extras
+from mathutils import Vector
+
+def get_screen_coords(context, coord):
+    visible = False
+    scene = context.scene
+    cam = scene.camera
+    matrix = cam.calc_matrix_camera(
+        depsgraph=context.evaluated_depsgraph_get(),
+        x=scene.render.resolution_x,
+        y=scene.render.resolution_y,
+        scale_x=scene.render.pixel_aspect_x,
+        scale_y=scene.render.pixel_aspect_y
+    )
+    p = matrix @ coord
+    if p.z > 0:
+        visible = True
+        x = (1 + p.x / p.z) / 2 * scene.render.resolution_x
+        y = (1 - p.y / p.z)  * scene.render.resolution_y
+        return (x, y, visible)
+
+
+def save_vertices_to_csv(filepath, data):
+    with open(filepath, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Vertex Index', 'Screen X', 'Screen Y', 'Visible'])
+        rows = 0
+        for idx, coord in data:
+            if coord:
+                rows += 1
+                writer.writerow([idx, *coord])
+        print(f"rows in csv = {rows}")
+def main(context, filepath):
+    obj = context.object
+    if obj is None or obj.type != 'MESH':
+        print("No mesh object is selected.")
+        return
+    if obj.mode != 'EDIT':
+        print("Object is not in edit mode.")
+        return
+
+    bpy.ops.object.mode_set(mode='OBJECT')
+    selected_vertices = [(v.index, v.co) for v in obj.data.vertices if v.select]
+    if not selected_vertices:
+        print("No vertices are selected.")
+        return
+    bpy.ops.object.mode_set(mode='EDIT')
+
+    screen_coords = [(idx, get_screen_coords(context, obj.matrix_world @ co)) for idx, co in selected_vertices]
+    if not screen_coords:
+        print("No screen coordinates calculated.")
+        return
+
+    save_vertices_to_csv(filepath, screen_coords)
+    print(f"Data saved to {filepath}")
+context = bpy.context
+filepath = r"C:\Desktop\selected_verts.csv"  # Adjust to your filepath
+main(context, filepath)
